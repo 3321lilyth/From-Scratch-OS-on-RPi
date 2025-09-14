@@ -8,10 +8,10 @@
 - [Resource](https://s-matyukevich.github.io/raspberry-pi-os/)
 ---
 
-## 📂 Repository Structure
-- lab0-environment/ # 基本環境架設(linker )
-- lab1-... # (之後會補上)
-- lab2-... # (之後會補上)
+## Overview
+- lab0-基本環境架設
+- lab1-Boot, Mini UART / Mailbox
+- lab2-Bootloader / Device Tree / Initial Ramdisk / Startup Allocator
 ...
 - lab7-...
 
@@ -92,3 +92,18 @@ make gdb    # 終端機 2：啟動並連線 GDB
 layout split     # 分割視窗，同時看反組譯與原始碼/暫存器
 si               # 單步執行（step instruction），可觀察 PC 移動
 # 其他：break <symbol>、info registers、continue 等
+```
+
+
+---
+
+## 🧪 Lab2 — Bootloader / Device Tree / Initial Ramdisk / Startup Allocator
+🔗 [Lab2 課程說明文件](https://nycu-caslab.github.io/OSC2025/labs/lab2.html)
+
+### 📖 內容概要
+- 本 Lab 依 **Part** 漸進完成並逐一驗證；我的實作與驗證順序為  
+  **part1 → part2 → part5 → part3 → part6 → part4**（**final version = part4**）。
+- **Bootloader**：自動將 kernel **load** 到正確位址並跳轉執行，避免每次重編後都要手動燒錄/插拔 SD 卡。
+- **Initial Ramdisk (initramfs)**：在尚未掛載真正根檔案系統前，提供一個暫時且小型的檔案系統，方便 kernel 早期階段存取 **drivers / kernel modules**。
+- **Device Tree (DT)**：告知 kernel 系統上有哪些周邊裝置、記憶體映射與中斷等硬體描述，協助早期硬體初始化。
+- **Startup Memory Allocator**：在正式分配器就緒前提供啟動期所需記憶體，供各子系統初始化其資料結構；同時將不可覆寫的關鍵記憶體區段標記為 **reserved/invalid** 以避免誤用。
