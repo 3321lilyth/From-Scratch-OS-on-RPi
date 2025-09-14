@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "type.h": "c",
+        "initfs.h": "c",
+        "tmpfs.h": "c",
+        "memory_test.h": "c",
+        "vfs.h": "c",
+        "utli.h": "c",
+        "mini_uart.h": "c",
+        "thread.h": "c"
+    }
+}

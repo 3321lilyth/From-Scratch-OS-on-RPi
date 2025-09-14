@@ -1,0 +1,20 @@
+{
+    "files.associations": {
+        "simple_alloc.h": "c",
+        "buddy.h": "c",
+        "reboot.h": "c",
+        "utli.h": "c",
+        "devicetree.h": "c",
+        "mini_uart.h": "c",
+        "type.h": "c",
+        "cpio.h": "c",
+        "vm_config.h": "c",
+        "mmu.h": "c",
+        "memory_test.h": "c",
+        "thread.h": "c",
+        "thread_functions.h": "c",
+        "exception.h": "c",
+        "mailbox.h": "c",
+        "gpio.h": "c"
+    }
+}

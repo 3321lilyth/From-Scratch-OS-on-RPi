@@ -1,0 +1,6 @@
+kernel=bootloader.img
+kernel_address=0x60000
+arm_64bit=1
+enable_uart=1
+dtoverlay=pi3-miniuart-bt
+core_freq_min=250

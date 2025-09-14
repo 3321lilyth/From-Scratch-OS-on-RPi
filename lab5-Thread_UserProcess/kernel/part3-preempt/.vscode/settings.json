@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "memory_test.h": "c",
+        "mini_uart.h": "c"
+    }
+}

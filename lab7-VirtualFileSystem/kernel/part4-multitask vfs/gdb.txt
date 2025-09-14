@@ -1,0 +1,33 @@
+
+1. 進入方法 : 
+    先用 make debug 把 qemu 跑起來，在開另外一個 cmd 打 make gdb
+    進入 gdb 後 layout split，就可以開始設定 break  point
+    c: continue, b: break point, quit 退出, si 逐條執行（不進入函數）, s(執行直到返回上一層 function)
+
+
+2. 如何設定 break point
+    - b <symbol> : function 都是 symbol，這樣設定後一進到該 function 就會停住
+    - b *0x<address> : 執行到指定 addr 的指令時就 b。
+        make 完後可以先用 aarch64-linux-gnu-objdump -D kernel8.elf > all.txt 看到每一行是甚麼指令
+        找到你想要的指令 addr 後回去 gdb 輸入即可
+    - 
+
+
+
+3. 如何在 break point 取得我們要的資料
+    - 常見參數 
+        - /x 代表用16進位(預設10進位)
+        - 1g 是 1 個 8 bytes (g = giant word)
+    - CPU register: info registers <sp/lr/....>
+    - system register: p/x $elr_el1 (這個好像是不行)
+    - general register: p $x1
+    - 指定 address 的記憶體內容(比如 sp=0x9E60)
+        - 8B 的資料: x/1gx 0x9E60    -> 最後一個 push 進 stack 的資料
+        - 16B 的資料: x/2gx 0x9E60
+        - 看一段整個 stack: x/Ngx 一次把 sp 到 stack base 間的內容全部印出，這樣可以對照 stack layout。
+
+
+# p $r0, p $pc
+# 印出指定 address 儲存的內容 (x/[n][f][u] <address>, x)
+# 查看 reg 的值: info register 或p/x $elr_el1
+# watch: 監控 register 的改寫

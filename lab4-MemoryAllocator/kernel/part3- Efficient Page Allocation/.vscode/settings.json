@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "buddy.h": "c",
+        "mini_uart.h": "c",
+        "dynamic_alloc.h": "c"
+    }
+}

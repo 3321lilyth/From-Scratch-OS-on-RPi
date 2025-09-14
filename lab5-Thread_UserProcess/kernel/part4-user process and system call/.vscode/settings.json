@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "mailbox.h": "c",
+        "exception.h": "c",
+        "syscall.h": "c",
+        "thread_functions.h": "c",
+        "mini_uart.h": "c",
+        "thread.h": "c",
+        "cpio.h": "c",
+        "utli.h": "c",
+        "timer.h": "c"
+    }
+}

@@ -1,0 +1,9 @@
+#ifndef _REBOOT_H
+#define _REBOOT_H 
+
+#include "utli.h"
+
+void set(long addr, unsigned int value);
+void reset(int tick);
+
+#endif

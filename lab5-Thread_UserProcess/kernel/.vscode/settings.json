@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "buddy.h": "c",
+        "memory_test.h": "c"
+    }
+}

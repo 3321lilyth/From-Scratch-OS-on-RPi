@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "timer.h": "c",
+        "dynamic_alloc.h": "c",
+        "simple_alloc.h": "c",
+        "type.h": "c",
+        "devicetree.h": "c",
+        "mini_uart.h": "c",
+        "cpio.h": "c"
+    }
+}
