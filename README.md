@@ -107,3 +107,26 @@ si               # 單步執行（step instruction），可觀察 PC 移動
 - **Initial Ramdisk (initramfs)**：在尚未掛載真正根檔案系統前，提供一個暫時且小型的檔案系統，方便 kernel 早期階段存取 **drivers / kernel modules**。
 - **Device Tree (DT)**：告知 kernel 系統上有哪些周邊裝置、記憶體映射與中斷等硬體描述，協助早期硬體初始化。
 - **Startup Memory Allocator**：在正式分配器就緒前提供啟動期所需記憶體，供各子系統初始化其資料結構；同時將不可覆寫的關鍵記憶體區段標記為 **reserved/invalid** 以避免誤用。
+
+
+
+---
+
+## 🧪 Lab3 — Exceptions, Timers & Async UART (+ User Program via SVC)
+🔗 [Lab3 課程說明文件](https://nycu-caslab.github.io/OSC2025/labs/lab3.html)
+
+### 📖 內容概要
+- **Exception Vector Table**  
+  當同步/非同步例外發生（如 SVC、IRQ、FIQ、SError），硬體會查表取得 **handler entry** 跳入處理；你會實作對應的 EL1 向量與保存/還原暫存器的入口框架。
+- **Timer Handler — One-shot Timer Queue**  
+  提供簡單的一次性計時器介面，user 可註冊「幾秒後」執行的任務（例如列印訊息）。中斷到來時從 queue 取出到期事件並喚醒/排入後續處理。
+- **UART Handler — 由同步改為非同步**  
+  將 busy-wait 的同步 UART 改成 **interrupt-driven（非同步）**：  
+  - 避免 kernel 停在輪詢；  
+  - 在啟用 timer 的情況下，同步 UART 會被頻繁中斷打斷導致輸入錯亂，改為中斷式可穩定接收並緩衝資料。
+- **Part5 — Soft Interrupt Handler Decoupling**  
+  原則是 **ISR 要「又短又快」**：在中斷中只做**必要最小工作**（例如把資料從硬體 FIFO 搬到記憶體緩衝，避免溢出），其餘邏輯以 **task queue（deferred work）** 交由下半部慢慢處理，ISR 盡快 return。
+
+### ⚙️ 編譯與 QEMU 執行
+- **User program & SVC**  
+  助教提供的 `user_program.S` 會以 `svc #0` 觸發 system call。注意必須**先把它組譯/連結成獨立的 `user.img`（raw binary）**，才是真正的 machine code，之後 kernel 以 branch/jump **跳到對應載入位址**執行。為此本 lab 會**額外撰寫一份 user-side Makefile**（與 kernel 的 Makefile 分開）。
