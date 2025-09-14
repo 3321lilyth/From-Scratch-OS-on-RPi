@@ -3,7 +3,6 @@
 本專案包含 **NYCU OSDI 課程 (OSC2025)** 的 Lab 實作，從零開始在 **Raspberry Pi 3** 上打造作業系統。  
 所有 lab 均基於 [課程官方說明](https://nycu-caslab.github.io/OSC2025/) 完成，並搭配 QEMU 以及實體樹莓派驗證。  
 
----
 
 ## 📂 Repository Structure
 lab0-environment/ # 基本環境架設
@@ -13,8 +12,6 @@ lab2-... # (之後會補上)
 lab7-...
 
 
-
----
 
 ## 🧪 Lab0 - 基本環境架設
 🔗 [Lab0 課程說明文件](https://nycu-caslab.github.io/OSC2025/labs/lab0.html)
@@ -43,7 +40,7 @@ aarch64-linux-gnu-objcopy -O binary kernel8.elf kernel8.img
 
 # 使用 QEMU 測試
 qemu-system-aarch64 -M raspi3b -kernel kernel8.img -display none -S -s
-```bash
+```
 
 ### 🍓 Raspberry Pi 3 實體執行步驟
 ```bash
@@ -61,4 +58,4 @@ sudo chmod 777 /dev/ttyUSB0    # 根據實際 device 編號調整
 
 # 使用 minicom 與 RPi 溝通
 sudo minicom -D /dev/ttyUSB0
-```bash
+```
