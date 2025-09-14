@@ -43,9 +43,10 @@ aarch64-linux-gnu-objcopy -O binary kernel8.elf kernel8.img
 
 # 使用 QEMU 測試
 qemu-system-aarch64 -M raspi3b -kernel kernel8.img -display none -S -s
-
+```bash
 
 ### 🍓 Raspberry Pi 3 實體執行步驟
+```bash
 # 假設已經生成 kernel8.img
 
 # 插入 SD 卡並查詢裝置
@@ -60,3 +61,4 @@ sudo chmod 777 /dev/ttyUSB0    # 根據實際 device 編號調整
 
 # 使用 minicom 與 RPi 溝通
 sudo minicom -D /dev/ttyUSB0
+```bash
