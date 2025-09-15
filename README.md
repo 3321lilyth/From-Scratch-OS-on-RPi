@@ -130,3 +130,17 @@ si               # 單步執行（step instruction），可觀察 PC 移動
 ### ⚙️ 編譯與 QEMU 執行
 - **User program & SVC**  
   助教提供的 `user_program.S` 會以 `svc #0` 觸發 system call。注意必須**先把它組譯/連結成獨立的 `user.img`（raw binary）**，才是真正的 machine code，之後 kernel 以 branch/jump **跳到對應載入位址**執行。為此本 lab 會**額外撰寫一份 user-side Makefile**（與 kernel 的 Makefile 分開）。
+
+
+## 🧪 Lab4 — Memory Allocator
+🔗 [Lab4 課程說明文件](https://nycu-caslab.github.io/OSC2025/labs/lab4.html)
+### 📖 內容概要
+- 本 Lab 實作三種 allocator：
+  - **Startup Allocator**：開機早期使用，供各子系統初始化資料結構的臨時記憶體來源（之後會被正式 allocator 取代）。
+  - **Buddy System**（實體頁框分配器）：
+    - 以 **2^k 頁**為單位做分配與合併。
+    - 兩種實作風格：
+      - **FreeList**：每個 order 維護一條空閒串列，合併/分裂時於串列間搬移（時間複雜度 **O(n)** 取決於尋找/移除成本）。
+      - **Binary Tree 風格**：用樹或位元標記管理分裂/合併狀態，尋找與合併平均 **O(log N)**。
+  - **Dynamic Allocator**（小物件/可變大小配置器，例如 `kmalloc/kfree` 風格）：在 buddy 之上建立，處理細粒度配置與減少外部碎片。
+- 本次重點在 **C 語言演算法設計與資料結構**（分割/合併、對齊、碎片處理），與底層裝置/例外處理關聯較小。
