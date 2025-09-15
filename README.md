@@ -160,3 +160,16 @@ si               # 單步執行（step instruction），可觀察 PC 移動
 
 ### ⚙️ 編譯與 QEMU 執行
 - **互動測試重點**：在外接螢幕**播放影片**（由 `syscall.img` 透過 **mailbox + framebuffer** 顯示）的同時，**shell 仍能流暢回應輸入**（驗證 preemptive 調度與 **非同步 UART**）。  
+
+---
+
+## 🧪 Lab6 — Virtual Memory & Page Tables (MMU / TTBR0 / TTBR1)
+🔗 [Lab6 課程說明文件](https://nycu-caslab.github.io/OSC2025/labs/lab6.html)
+
+### 📖 內容概要
+- **啟用 MMU 的雙階段流程**
+  - **Boot 階段（2-level, identity mapping）**：在 early boot 先建立**簡化的 2-level 1:1 映射**（必需的 code/data 與裝置區域），設定 `MAIR_EL1`/`TCR_EL1`，載入 `TTBRx_EL1`，`DSB; ISB` 後設定 `SCTLR_EL1.M=1` 開啟 MMU，確保系統能安全轉入虛擬位址。
+  - **MMU 啟動後（C 程式內切換到 3-level）**：以 C 實作完整的 **3-level page table**，替換 boot 時的暫時表；針對 **Kernel** 與 **User** 建立分離的位址空間。
+- **位址空間佈局**
+  - **Kernel Upper Half**：將 kernel 映射至**高位元虛擬位址空間（upper half）**，包含 `.text/.rodata/.data/.bss`、直接映射區（如需要）、以及各種 **MMIO（Device-nGnRnE）**。
+  - **User Lower Half**：每個行程建立獨立的 **lower half** 映射（程式/資料/stack/heap），切換行程時切換 **`TTBR0_EL1`**。
