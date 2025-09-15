@@ -144,3 +144,19 @@ si               # 單步執行（step instruction），可觀察 PC 移動
       - **Binary Tree 風格**：用樹或位元標記管理分裂/合併狀態，尋找與合併平均 **O(log N)**。
   - **Dynamic Allocator**（小物件/可變大小配置器，例如 `kmalloc/kfree` 風格）：在 buddy 之上建立，處理細粒度配置與減少外部碎片。
 - 本次重點在 **C 語言演算法設計與資料結構**（分割/合併、對齊、碎片處理），與底層裝置/例外處理關聯較小。
+
+---
+
+## 🧪 Lab5 — Threads, Scheduler, Syscalls & Signals
+🔗 [Lab5 課程說明文件](https://nycu-caslab.github.io/OSC2025/labs/lab5.html)
+
+### 📖 內容概要
+- **Thread 系統**：建立 **user thread** 與 **kernel thread**，提供基本的生命週期管理（建立、排程、終止）。
+- **Scheduler**：支援 **cooperative**（thread 自願讓出 CPU）與 **preemptive**（由 **timer** 逾時搶佔）切換。
+- **System Call**：實作常見介面：
+  - `get_pid()`, `read()`, `write()`, `fork()`, `exec()`, `kill()` …  
+  - 使用 `svc #0` 進入 EL1，依 ABI（例如 `x8` 為號碼、`x0–x5` 傳參）分派至對應服務。
+- **Signal 機制**：提供 `signal()` 讓 thread 註冊自訂 **signal handler**；他線程送出 signal 時，由 kernel 於合適時機切換至 handler 執行，回覆後返回被中斷的 user 態。
+
+### ⚙️ 編譯與 QEMU 執行
+- **互動測試重點**：在外接螢幕**播放影片**（由 `syscall.img` 透過 **mailbox + framebuffer** 顯示）的同時，**shell 仍能流暢回應輸入**（驗證 preemptive 調度與 **非同步 UART**）。  
