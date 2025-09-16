@@ -173,3 +173,14 @@ si               # 單步執行（step instruction），可觀察 PC 移動
 - **位址空間佈局**
   - **Kernel Upper Half**：將 kernel 映射至**高位元虛擬位址空間（upper half）**，包含 `.text/.rodata/.data/.bss`、直接映射區（如需要）、以及各種 **MMIO（Device-nGnRnE）**。
   - **User Lower Half**：每個行程建立獨立的 **lower half** 映射（程式/資料/stack/heap），切換行程時切換 **`TTBR0_EL1`**。
+
+
+---
+
+## 🧪 Lab7 — Virtual File System (VFS) & Tmpfs（以 Lab5 為基底）
+🔗 [Lab7 課程說明文件](https://nycu-caslab.github.io/OSC2025/labs/lab7.html)
+
+### 📖 內容概要
+- **開發基底說明**  
+  我在 Lab6 僅完成約 80%（且上板未通過），但 **Lab7 與 MMU 不強相依**，因此本 Lab 直接以 **Lab5 的程式碼為基底** 繼續實作。另外印象中 lab7 也只完成 Basic Exercise 4，後面的進階部分沒有實做
+  
